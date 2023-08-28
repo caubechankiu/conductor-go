@@ -461,8 +461,8 @@ func (c *TaskRunner) getRunningWorkers(taskName string) (int, error) {
 func (c *TaskRunner) isWorkerRegistered(taskName string) bool {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
-	_, ok := c.batchSizeByTaskName[taskName]
-	return ok
+	batchSize, ok := c.batchSizeByTaskName[taskName]
+	return ok && batchSize > 0
 }
 
 func (c *TaskRunner) increaseRunningWorkers(taskName string) error {
